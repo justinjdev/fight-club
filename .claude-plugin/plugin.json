@@ -1,0 +1,12 @@
+{
+  "name": "fight-club",
+  "version": "0.1.0",
+  "description": "Adversarial code review plugin. Fights bad code so your reviewers don't have to.",
+  "author": {
+    "name": "justinjdev"
+  },
+  "homepage": "https://github.com/justinjdev/fight-club",
+  "repository": "https://github.com/justinjdev/fight-club",
+  "license": "MIT",
+  "keywords": ["code-review", "adversarial", "quality"]
+}
