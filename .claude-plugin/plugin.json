@@ -8,5 +8,8 @@
   "homepage": "https://github.com/justinjdev/fight-club",
   "repository": "https://github.com/justinjdev/fight-club",
   "license": "MIT",
-  "keywords": ["code-review", "adversarial", "quality"]
+  "keywords": ["code-review", "adversarial", "quality"],
+  "skills": ["./plugin/skills/"],
+  "agents": ["./plugin/agents/"],
+  "commands": ["./plugin/commands/"]
 }
