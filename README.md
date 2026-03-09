@@ -30,10 +30,6 @@ Run an adversarial review on a file, diff, or PR:
 /fight-club:fight diff             # review current git diff
 ```
 
-### `fight-club:challenger` agent
-
-A deep-dive adversarial review agent. Claude spawns this automatically during `/fight-club:fight`, or you can invoke it directly.
-
 ## Adding Skills
 
 Drop skill directories into `skills/` — Claude Code will discover them automatically.
