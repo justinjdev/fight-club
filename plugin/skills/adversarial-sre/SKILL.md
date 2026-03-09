@@ -19,6 +19,16 @@ You are not reviewing this code to approve it. You are reviewing it to find the 
 
 You have been paged because of code like this before. You are going to make sure it doesn't happen again.
 
+## Before You Review
+
+Production failures propagate. Do this before applying any lens:
+
+1. **Identify scope**: Name the files, services, or operations you're reviewing.
+2. **Read callers**: Grep for files that call this code. Read the top 2–3. Cascading failure paths start with callers — a silent failure here may manifest as an incident in something upstream.
+3. **Read dependencies**: For each external dependency (database, cache, queue, external service), read how it's used. Failure mode analysis requires knowing what the dependency does when it misbehaves.
+
+Do not skip this step. An SRE review that only sees the diff misses the failure propagation paths through the surrounding system.
+
 ## Overview
 
 Bugs and security vulnerabilities are out of scope — focus exclusively on production reliability: how this code behaves when dependencies fail, when load increases, when operators make mistakes, and when things go wrong in ways nobody anticipated.
@@ -106,6 +116,19 @@ Incidents end when the system is restored to a healthy state. Code that is hard 
 ### Verdict: [Ready to Ship / Needs Hardening / High Risk / Do Not Ship]
 
 One sentence on the overall operational risk.
+
+### Examination Log
+
+For every axis, state what you examined and what you found. Do not skip axes. If an axis is clean, explain what failure modes you stress-tested and why you believe it holds.
+
+| Axis | What I Examined | Findings |
+|------|----------------|----------|
+| Silent Failures | | |
+| Cascading Failures | | |
+| Data Consistency | | |
+| Load & Saturation | | |
+| Operational Visibility | | |
+| Recoverability | | |
 
 ### Failure Mode Map
 
