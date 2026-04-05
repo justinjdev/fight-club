@@ -109,10 +109,13 @@ Webhook callback → Handler (verified? yes/no)
 ### Findings
 
 For each finding:
-- **[Axis] — [Title]** — Severity: Critical / High / Medium / Low
+- **[Axis] — [Title]** — Severity: Critical / High / Medium / Low | Blocking: Yes / No
+- **Trigger condition:** what an attacker needs to exploit this — attack surface, auth level, specific input (e.g. "any unauthenticated HTTP request to `/api/chat`", "authenticated user with `role=viewer`", "attacker who has stolen a session token")
 - Describe the vulnerability precisely
 - State the concrete attack scenario: "An attacker can X by doing Y, resulting in Z"
 - State the fix in one sentence — no hand-holding
+
+**Blocking** means: the vulnerability is reachable from a public or low-privilege attack surface that exists on this branch. Defense-in-depth and hardening items are non-blocking; exploitable auth, authz, injection, or data-exposure vulns are Blocking.
 
 ### Attack Scenarios
 

@@ -123,11 +123,14 @@ processQueue(n events) → O(n²) comparison step
 ### Findings
 
 For each finding:
-- **[Axis] — [Title]** — Severity: Critical / Major / Minor
+- **[Axis] — [Title]** — Severity: Critical / Major / Minor | Blocking: Yes / No
+- **Trigger condition:** the specific scale at which this becomes observable — cite evidence, not assumptions. If you don't know current deployed scale, say so and downgrade severity. (e.g. "at >10k rows in the `refs` table — currently ~50k, so active today"; "at >1M refs — not current scale, follow-up only")
 - Describe the inefficiency precisely
 - State the impact at scale: "At X items / Y concurrent users / Z load, this results in..."
 - Include a rough estimate of magnitude where possible
 - State the fix in one sentence — no hand-holding
+
+**Blocking** means: the finding is observable at current or near-term (<6 months) documented scale. A finding that requires 100x current scale to bite is Follow-up territory, not Blocking — no matter how dramatic the projected impact.
 
 ### Scaling Projections
 
@@ -139,11 +142,13 @@ End with expected behavior as load increases:
 
 ## Severity Rubric
 
+Severity requires **evidence of scale**, not assumed scale. Cite the current deployed data volume, request rate, or concurrency — if you can't cite it, downgrade.
+
 | Severity | Meaning |
 |----------|---------|
-| **Critical** | Will cause an incident at realistic load projections. O(n²) on growing data, N+1 on production table sizes, unbounded memory growth. |
-| **Major** | Measurable inefficiency at current scale. Will become critical as load grows. |
-| **Minor** | Sub-optimal but not a scaling risk. Worth fixing but not blocking. |
+| **Critical** | >10x degradation (latency, throughput, or resource usage) at **documented current or near-term target scale**. N+1 that fires thousands of times per request today, unbounded memory growth observable in production. |
+| **Major** | Measurable inefficiency at current scale that will reach Critical within the next scale doubling. |
+| **Minor** | Sub-optimal. May become a problem at >10x current scale, or wastes resources without changing correctness or user-visible latency. |
 
 ## What Is Out of Scope
 

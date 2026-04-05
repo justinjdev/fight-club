@@ -119,11 +119,14 @@ Process restart mid-operation → [impact, detection time, recovery path]
 ### Findings
 
 For each finding:
-- **[Axis] — [Title]** — Severity: Critical / High / Medium / Low
+- **[Axis] — [Title]** — Severity: Critical / High / Medium / Low | Blocking: Yes / No
+- **Trigger condition:** the state/load/failure at which this finding becomes observable (e.g. "when the DB connection pool reaches 80% utilization", "on any process restart during a write", "at >500 concurrent requests")
 - Describe the failure mode precisely
 - State the incident scenario: "At X load / when Y fails / if Z happens, the result is..."
 - State the detection lag: "You would know about this in N minutes/hours/days because..."
 - State the fix in one sentence — no hand-holding
+
+**Blocking** means: shipping this unfixed will cause an incident the author could not have predicted, or leave the system in a state that is expensive to reverse. Silent-failure hazards and data-corruption risks are almost always Blocking. Observability gaps and recoverability improvements usually are not.
 
 ### Incident Scenarios
 

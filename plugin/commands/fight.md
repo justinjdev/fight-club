@@ -55,9 +55,25 @@ Verdict: Solid | Needs Work | Insufficient | No Confidence
 Verdict: Ready to Ship | Needs Hardening | High Risk | Do Not Ship
 
 ---
+
+## Blocking (must fix before merge)
+[Cross-lens list of every finding with Blocking: Yes. Empty section if none.]
+
+## Follow-up (track as issues, do not block merge)
+[Cross-lens list of every finding with Blocking: No. Group by lens.]
+
+---
 ## Overall Verdict
-[APPROVED / NEEDS WORK / REJECT]
+[APPROVED / APPROVED (with follow-ups) / NEEDS WORK / REJECT]
 [2-3 sentences: biggest risks, blockers, recommended next action]
 ```
 
-The overall verdict is REJECT if any reviewer issues Broken, Critical, or Do Not Ship. NEEDS WORK if any reviewer flags issues. APPROVED only if all reviewers clear.
+### Verdict rules
+
+The overall verdict is determined by **Blocking** findings, not by severity alone:
+
+- **REJECT** if 2+ Blocking=Yes Critical findings, OR any lens returns a terminal verdict (Broken / Do Not Ship / Critical / Will Not Scale / No Confidence).
+- **NEEDS WORK** if 1+ Blocking=Yes findings exist.
+- **APPROVED** if zero Blocking=Yes findings. Use **APPROVED (with follow-ups)** when Non-blocking Major/Minor items exist — the author should open tracking issues for them but they do not gate the merge.
+
+A finding is **Blocking** when: shipping it unfixed causes a failure the author could not have predicted, or leaves the system in a state that is expensive to reverse. Severity measures impact; Blocking measures merge-gate posture. Most architectural and test-coverage findings are non-blocking.
