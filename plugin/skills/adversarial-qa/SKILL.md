@@ -125,7 +125,7 @@ For each finding:
 - State the specific bug that would slip through: "If X were broken in Y way, these tests would still pass"
 - State the fix in one sentence — no hand-holding
 
-**Blocking** means: the gap covers a code path that is plausibly broken today — the suite would greenlight a regression the reviewer can articulate. Missing happy-path coverage is almost never Blocking. Untested failure modes on code the author just changed frequently are.
+**Blocking** means: the gap covers a code path that is plausibly broken today — the suite would greenlight a regression the reviewer can articulate. Missing happy-path coverage is almost never Blocking. Untested failure modes on code the author just changed are frequently Blocking.
 
 ### Bugs These Tests Would Miss
 

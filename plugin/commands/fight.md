@@ -72,7 +72,7 @@ Verdict: Ready to Ship | Needs Hardening | High Risk | Do Not Ship
 
 The overall verdict is determined by **Blocking** findings, not by severity alone:
 
-- **REJECT** if 2+ Blocking=Yes Critical findings, OR any lens returns a terminal verdict (Broken / Do Not Ship / Critical / Will Not Scale / No Confidence).
+- **REJECT** if 2+ Blocking=Yes Critical findings, OR any lens returns a terminal verdict (Broken / Do Not Ship / Critical / Blocking Issue / No Confidence).
 - **NEEDS WORK** if 1+ Blocking=Yes findings exist.
 - **APPROVED** if zero Blocking=Yes findings. Use **APPROVED (with follow-ups)** when Non-blocking Major/Minor items exist — the author should open tracking issues for them but they do not gate the merge.
 

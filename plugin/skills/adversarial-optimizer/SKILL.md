@@ -124,13 +124,16 @@ processQueue(n events) → O(n²) comparison step
 
 For each finding:
 - **[Axis] — [Title]** — Severity: Critical / Major / Minor | Blocking: Yes / No
-- **Trigger condition:** the specific scale at which this becomes observable — cite evidence, not assumptions. If you don't know current deployed scale, say so and downgrade severity. (e.g. "at >10k rows in the `refs` table — currently ~50k, so active today"; "at >1M refs — not current scale, follow-up only")
+- **Trigger condition:** the scale or access pattern at which this becomes observable.
+  - For **structural issues** (unbounded growth, O(n²), N+1, missing index): cite the algorithm and the scale at which it bites. These stand at their natural severity regardless of whether you have deployed-scale metrics.
+  - For **scale-dependent claims** ("this will be slow at 5M rows"): cite current deployed scale as evidence. If you don't have it, flag the finding as "scale verification needed" and do not escalate severity based on assumed scale.
+  - Example: "N+1 on `SELECT * FROM refs WHERE parent_id = ?` — fires once per item in the outer loop, observable today at current scale"; "at >1M refs — not current scale, scale verification needed before escalation"
 - Describe the inefficiency precisely
 - State the impact at scale: "At X items / Y concurrent users / Z load, this results in..."
 - Include a rough estimate of magnitude where possible
 - State the fix in one sentence — no hand-holding
 
-**Blocking** means: the finding is observable at current or near-term (<6 months) documented scale. A finding that requires 100x current scale to bite is Follow-up territory, not Blocking — no matter how dramatic the projected impact.
+**Blocking × Severity.** Critical findings are Blocking by construction — they manifest at reachable scale. Major findings are usually Blocking when they affect the current code path. Minor findings are never Blocking; they become follow-up issues.
 
 ### Scaling Projections
 
@@ -142,13 +145,13 @@ End with expected behavior as load increases:
 
 ## Severity Rubric
 
-Severity requires **evidence of scale**, not assumed scale. Cite the current deployed data volume, request rate, or concurrency — if you can't cite it, downgrade.
+Structural issues (unbounded growth, O(n²), N+1, missing index on a queried column) stand at their natural severity. Scale-dependent claims require evidence — cite current deployed scale, or downgrade.
 
-| Severity | Meaning |
-|----------|---------|
-| **Critical** | >10x degradation (latency, throughput, or resource usage) at **documented current or near-term target scale**. N+1 that fires thousands of times per request today, unbounded memory growth observable in production. |
-| **Major** | Measurable inefficiency at current scale that will reach Critical within the next scale doubling. |
-| **Minor** | Sub-optimal. May become a problem at >10x current scale, or wastes resources without changing correctness or user-visible latency. |
+| Severity | Meaning | Blocking |
+|----------|---------|---------|
+| **Critical** | Structural issue observable at current scale, OR >10x degradation (latency, throughput, or resources) at documented current or near-term target scale. Examples: N+1 firing thousands of times per request today, unbounded memory growth, full scan on a table that already has enough rows to matter. | Always |
+| **Major** | Measurable inefficiency on the current code path — bites at 2x–10x current scale, or wastes resources at current scale without >10x degradation. | Usually |
+| **Minor** | Wasteful but not a scaling risk at reachable scale. Bites only at substantially beyond near-term projected scale, or wastes resources without changing correctness or user-visible latency. | Never |
 
 ## What Is Out of Scope
 

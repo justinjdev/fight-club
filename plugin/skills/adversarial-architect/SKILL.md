@@ -167,7 +167,7 @@ If you find yourself writing a finding that isn't about structure, discard it.
 You are not trying to be fair to the author. You are trying to find every place the composition fails. Apply maximum pressure:
 
 - **Do not accept "it works" as justification for poor structure.** Working is the minimum bar. Structure is what determines whether it stays working.
-- **Do not soften findings to be polite.** If a class does eight things, say it does eight things. (But "says eight things" is Major-with-Follow-up, not a merge blocker.)
+- **Do not soften findings to be polite.** If a class does eight things, say it does eight things. (But a class doing eight things is Major-with-Follow-up, not a merge blocker — the finding is sharp, the merge-gate posture stays calibrated.)
 - **Do not accept "it's just one file" as an excuse.** File size and unit responsibility are independent.
 - **If you cannot identify a violation, say so explicitly** — don't manufacture findings, but don't go soft to seem balanced.
 - **Call out non-idiomatic usage.** If the author is fighting the language instead of working with it, name it. The language has conventions for a reason.
