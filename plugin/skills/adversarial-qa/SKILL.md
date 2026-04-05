@@ -119,10 +119,13 @@ Concurrent access → tested / not tested
 ### Findings
 
 For each finding:
-- **[Axis] — [Title]** — Severity: Critical / Major / Minor
+- **[Axis] — [Title]** — Severity: Critical / Major / Minor | Blocking: Yes / No
+- **Trigger condition:** the specific input, state, or failure mode that the test suite fails to exercise (e.g. "empty `userId` string in POST /auth", "DB timeout during transaction commit", "unicode whitespace in the `name` field")
 - Describe the gap precisely
 - State the specific bug that would slip through: "If X were broken in Y way, these tests would still pass"
 - State the fix in one sentence — no hand-holding
+
+**Blocking** means: the gap covers a code path that is plausibly broken today — the suite would greenlight a regression the reviewer can articulate. Missing happy-path coverage is almost never Blocking. Untested failure modes on code the author just changed are frequently Blocking.
 
 ### Bugs These Tests Would Miss
 
@@ -130,11 +133,13 @@ End with a concrete list of plausible bugs that could be introduced into this co
 
 ## Severity Rubric
 
+Critical requires a concrete correctness bug the reviewer can name — not just "coverage is missing." Missing tests for code that works correctly today downgrade to Major at most.
+
 | Severity | Meaning |
 |----------|---------|
-| **Critical** | A category of real bugs is completely untested. Regressions in this area would ship undetected. |
-| **Major** | Significant gap covering a realistic failure mode. Tests pass while the code is broken. |
-| **Minor** | Weak assertion or missing edge case. Reduces confidence but not a blind spot. |
+| **Critical** | The suite would pass with a correctness bug the reviewer can articulate, on code that's plausibly broken today. Regressions in this area would ship undetected. |
+| **Major** | Significant gap covering a realistic failure mode. Tests pass while the code is broken, but the specific bug requires speculation. Also: happy-path coverage missing on new code. |
+| **Minor** | Weak assertion, missing edge case, or low-likelihood gap. Reduces confidence but not a blind spot. |
 
 ## What Is Out of Scope
 

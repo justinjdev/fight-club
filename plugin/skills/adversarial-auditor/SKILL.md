@@ -109,10 +109,13 @@ Webhook callback → Handler (verified? yes/no)
 ### Findings
 
 For each finding:
-- **[Axis] — [Title]** — Severity: Critical / High / Medium / Low
+- **[Axis] — [Title]** — Severity: Critical / High / Medium / Low | Blocking: Yes / No
+- **Trigger condition:** what an attacker needs to exploit this — attack surface, auth level, specific input (e.g. "any unauthenticated HTTP request to `/api/chat`", "authenticated user with `role=viewer`", "attacker with a stolen `role=viewer` session token on a network path to the admin API")
 - Describe the vulnerability precisely
 - State the concrete attack scenario: "An attacker can X by doing Y, resulting in Z"
 - State the fix in one sentence — no hand-holding
+
+**Blocking** means: an exploitable vulnerability reachable from a public or low-privilege attack surface that exists on this branch. This applies across all six axes — injection, auth bypass, authorization failure, data exposure, cryptographic weakness, and trust-boundary violation are all Blocking when reachable from a real attack surface. Defense-in-depth and hardening improvements that are not directly exploitable from a reachable attack surface are non-blocking.
 
 ### Attack Scenarios
 
